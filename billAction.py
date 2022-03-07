@@ -12,22 +12,30 @@ page = driver.page_source
 soup = BeautifulSoup(page, 'html.parser')
 
 flBillInfo = 'flBillInfo.csv'
+info = open(flBillInfo, 'w')
+c = csv.writer(info)
+c.writerow( ['Bill Number', 'Title', 'Filled By', 'Last Action'])
+bills = soup.find('tbody')
 
-def getInfo(flBillInfo, soup):
-    info = open(flBillInfo, 'w')
-    c = csv.writer(info)
-    c.writerow( ['Bill Number', 'Title', 'Filled By', 'Last Action'])
-    bills = soup.find('tbody')
-    buttons = soup.find('a', class_='next')
-    for bill in bills.find_all('tr'):
-        info.write(bill.text.strip() + '\n')
-        for n in range(2):
-                driver.find_element_by_css_selector('.next').click()
-                s = randint(1, 10)
-                time.sleep(s)
-                for bill in bills.find_all('tr'):
-                    info.write(bill.text.strip() + '\n')
+for bill in bills.find_all('tr'):
+    info.write(bill.text.strip() + '\n')
 
-    info.close()
+info.close()
 
-getInfo(flBillInfo, soup)
+while True:
+    try:
+        nextPage = driver.find_element_by_css_selector('.next').get_attribute('href')
+        driver.find_element_by_css_selector('.next').click()
+        s = randint(1, 10)
+        time.sleep(s)
+        driver.get(str(nextPage))
+        page = driver.page_source
+        soup = BeautifulSoup(page, 'html.parser')
+        bills = soup.find('tbody')
+        for bill in bills.find_all('tr'):
+            info = open(flBillInfo, 'a')
+            info.write(bill.text.strip() + '\n')
+
+    except:
+        break
+        info.close()
