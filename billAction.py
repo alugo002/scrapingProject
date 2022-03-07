@@ -13,7 +13,7 @@ soup = BeautifulSoup(page, 'html.parser')
 
 flBillInfo = 'flBillInfo.csv'
 
-def get_info(flBillInfo, soup):
+def getInfo(flBillInfo, soup):
     info = open(flBillInfo, 'w')
     c = csv.writer(info)
     c.writerow( ['Bill Number', 'Title', 'Filled By', 'Last Action'])
@@ -30,4 +30,4 @@ def get_info(flBillInfo, soup):
 
     info.close()
 
-get_info(flBillInfo, soup)
+getInfo(flBillInfo, soup)
