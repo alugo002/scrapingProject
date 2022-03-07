@@ -15,7 +15,7 @@ flSenatorInfo = 'flSenatorInfo.csv'
 def get_info(flSenatorInfo, soup):
     info = open(flSenatorInfo, 'w')
     c = csv.writer(info)
-    c.writerow( ['Last Name', 'First Name', 'District', 'Party'])
+    c.writerow( ['Last Name', 'First Name', ' ', 'District', 'Party'])
     senators = soup.find('tbody')
     for sen in senators.find_all('tr'):
         sens = str(sen.text.strip())
