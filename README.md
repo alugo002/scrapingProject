@@ -12,4 +12,4 @@ Meanwhile, in my senators.py file, I defined a function that would simply do wha
 ## Challenges I ran into
 I had a hard time getting the driver to recognize that I wanted to scrape more than one page in my billAction.py file. I found it harder than expected to collect href's from each page after clicking into them. I also didn't weant to have to make the scraper go through all 20 pages twice just to get the urls then a second time for the information. The while loop which allowed me to change the url as it scraped, helped me overcome that challenge.
 
-The second challenge I found was getting clean csv files. I tried adding the strip() finction to both files, but it didn't seem to work for some reason, so that challenge was never overcome. 
+The second challenge I found was getting clean csv files. I tried adding the strip() finction to both files, but it didn't seem to work for some reason, so that challenge was never overcome this on time. 
