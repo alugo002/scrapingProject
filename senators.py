@@ -19,7 +19,7 @@ def get_info(flSenatorInfo, soup):
     sens = []
     senators = soup.find('tbody')
     for sen in senators.find_all('tr'):
-        info.write(sen.text.strip() + '\n')
+        info.write(sen.text.strip(line) + '\n')
 
     info.close()
 
