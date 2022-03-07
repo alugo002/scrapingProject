@@ -16,11 +16,12 @@ def get_info(flSenatorInfo, soup):
     info = open(flSenatorInfo, 'w')
     c = csv.writer(info)
     c.writerow( ['Last Name', 'First Name', 'District', 'Party'])
-    sens = []
     senators = soup.find('tbody')
     for sen in senators.find_all('tr'):
-        info.write(sen.text.strip() + '\n')
-
+        sens = str(sen.text.strip())
+        if 'Vacant' not in sens:
+            print(sens.replace('\n', ',') + '\n')
+            info.write(sens.replace('\n', ',') + '\n')
     info.close()
 
 get_info(flSenatorInfo, soup)
