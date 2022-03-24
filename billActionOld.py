@@ -11,27 +11,14 @@ driver.get('https://www.flsenate.gov/Session/Bills/2022')
 page = driver.page_source
 soup = BeautifulSoup(page, 'html.parser')
 
-table = soup.find('tbody')
-bills = table.find_all('tr')
-
-def billItems(bill):
-    items = bill.find_all('td')
-    number = bill.find('th')
-    billList = []
-    billList.append(number.text)
-    for item in items[0:3]:
-        billList.append(item.text.strip())
-    href = number.find('a').attrs['href']
-    billList.append(href)
-    return billList
-
-flBillInfo = 'flBillInfo.csv'
+flBillInfo = 'flBillInfoOld.csv'
 info = open(flBillInfo, 'w')
 c = csv.writer(info)
 c.writerow( ['Bill Number', 'Title', 'Filled By', 'Last Action'])
+bills = soup.find('tbody')
 
-for bill in bills:
-    c.writerow( billItems(bill) )
+for bill in bills.find_all('tr'):
+    info.write(bill.text.strip() + '\n')
 
 info.close()
 
@@ -44,9 +31,10 @@ while True:
         driver.get(str(nextPage))
         page = driver.page_source
         soup = BeautifulSoup(page, 'html.parser')
-        for bill in bills:
+        bills = soup.find('tbody')
+        for bill in bills.find_all('tr'):
             info = open(flBillInfo, 'a')
-            c.writerow( billItems(bill) )
+            info.write(bill.text.strip() + '\n')
 
     except:
         break
